@@ -1,15 +1,10 @@
-%global commit aa3c971b78c3cfd4f7cb2ee009b8c6b48cdd353f
-%global releasedate 20180813
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-
-
 Name:          cnping
-Version:       0
-Release:       %{releasedate}git%{shortcommit}%{?dist}
+Version:       1.0.0
+Release:       1%{?dist}
 Summary:       Minimal graphical real time IPv4 Ping Tool
 License:       MIT or BSD
-URL:           https://github.com/cnlohr/%{name}
-Source0:       %{url}/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
+URL:           https://github.com/cntools/%{name}
+Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: gcc
 BuildRequires: make
@@ -18,7 +13,7 @@ BuildRequires: libXext-devel
 BuildRequires: libX11-devel
 
 %description
-cnping is a minimal graphical real time IPv4 ping tool written in c.
+cnping is a minimal graphical real time IPv4 ping tool written in C.
 It can send pings via ICMP (regular ping) or HTTP which is useful 
 in case ICMP is prohibited. Responses are displayed as vertical bars 
 in a graphical window. Red bars indicate a response was not (yet) 
@@ -27,11 +22,10 @@ relative to the round trip time. Additional statistics are displayed
 as an overlay.
 
 %prep
-%autosetup -n %{name}-%{commit}
-rm cnping.exe
+%autosetup -n %{name}-%{version}
 
 %build
-make cnping CFLAGS="%{optflags}"
+%make_build CFLAGS="%optflags" LDFLAGS="%__global_ldflags"
 
 %install
 mkdir -p ${RPM_BUILD_ROOT}%{_bindir}
@@ -45,11 +39,16 @@ install -cp -m0755 cnping ${RPM_BUILD_ROOT}%{_bindir}/
 %license LICENSE*
 
 %changelog
+* Fri Oct 04 2019 David Auer <dreua@posteo.de> - 1.0.0-1
+- New version 1.0.0, remove all git commit related stuff
+- Use CFLAGS and LDFLAGS
+- Update URL
+
 * Tue Aug 21 2018 David Auer <dreua@posteo.de> - 0-20180813gitaa3c971
 - Add licenses
 
 * Sun Jul 22 2018 David Auer <dreua@posteo.de> - 0-20180717git2af4ff9.4
-- Proper use of %build
+- Proper use of %%build
 - Remove exe
 
 * Sat Jul 21 2018 David Auer <dreua@posteo.de> - 0-20180717git2af4ff9.3
