@@ -34,10 +34,10 @@ as an overlay.
 %make_build CFLAGS="%optflags" LDFLAGS="%__global_ldflags"
 
 %install
-install -cpD -t %{buildroot}%{_bindir}/ -m0755 cnping
-install -cpD -t %{buildroot}%{_mandir}/man1/ -m644 cnping.1
-install -cpD -t %{buildroot}%{_datadir}/applications/ freedesktop/*.desktop
-install -cpD -t %{buildroot}%{_metainfodir}/ freedesktop/*.xml
+install -cpD -m0755 -t %{buildroot}%{_bindir}/ cnping
+install -cpD -m0644 -t %{buildroot}%{_mandir}/man1/ cnping.1
+install -cpD -m0644 -t %{buildroot}%{_datadir}/applications/ freedesktop/*.desktop
+install -cpD -m0644 -t %{buildroot}%{_metainfodir}/ freedesktop/*.xml
 mkdir -p %{buildroot}%{_datadir}/icons/
 cp -r freedesktop/icons/* %{buildroot}%{_datadir}/icons/
 
