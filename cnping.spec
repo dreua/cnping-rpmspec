@@ -1,10 +1,21 @@
+# If you change this file, please inform @dreua since I most likely have to
+# apply these changes to the other pdfarranger spec file I maintain, too.
+
+# These must come from the calling environment
+%global repo %{getenv:GITHUB_REPOSITORY}
+%global sha %{getenv:GITHUB_SHA}
+
+
+%global shortcommit %(c=%{sha}; echo ${c:0:7})
+%define build_timestamp %(date +"%%Y%%m%%d")
+
 Name:          cnping
-Version:       1.0.0
-Release:       2%{?dist}
+Version:       0
+Release:       %{build_timestamp}git%{shortcommit}%{?dist}
 Summary:       Minimal graphical real time IPv4 Ping Tool
 License:       MIT or BSD
-URL:           https://github.com/cntools/%{name}
-Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+URL:           https://github.com/%{repo}
+Source0:       %{url}/archive/%{shortcommit}/%{name}-%{shortcommit}.tar.gz
 
 BuildRequires: gcc
 BuildRequires: make
@@ -28,7 +39,7 @@ relative to the round trip time. Additional statistics are displayed
 as an overlay.
 
 %prep
-%autosetup -n %{name}-%{version}
+%autosetup -n %{name}-%{sha}}
 
 %build
 %make_build CFLAGS="%optflags" LDFLAGS="%__global_ldflags"
@@ -55,6 +66,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/applications/%{app_id}.desktop
 
 %changelog
+* Fri Jan 27 2023 David Auer <dreua@posteo.de>
+- Modified for cnping-CI: Build given commit.
+
 * Wed Dec 23 2020 David Auer <dreua@posteo.de> - 1.0.0-2
 - Add supplemental files for linux desktop installation
 
