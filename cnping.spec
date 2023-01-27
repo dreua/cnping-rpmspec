@@ -13,8 +13,8 @@ BuildRequires: libXext-devel
 BuildRequires: libX11-devel
 
 # For checks only
-BuildRequires:  libappstream-glib
-BuildRequires:  desktop-file-utils
+BuildRequires: libappstream-glib
+BuildRequires: desktop-file-utils
 
 %global app_id com.github.cntools.cnping
 
