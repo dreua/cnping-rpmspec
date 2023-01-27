@@ -39,7 +39,7 @@ relative to the round trip time. Additional statistics are displayed
 as an overlay.
 
 %prep
-%autosetup -n %{name}-%{sha}}
+%autosetup -n %{name}-%{sha}
 
 %build
 %make_build CFLAGS="%optflags" LDFLAGS="%__global_ldflags"
